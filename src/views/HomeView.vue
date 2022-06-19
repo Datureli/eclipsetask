@@ -1,7 +1,12 @@
 <template>
   <div class="home">
     <h1>Eclipse Task</h1>
-    <img :src="image" width="300" height="300" />
+    <img :src="image.urls.small" width="300" height="300" alt="image" />
+    <ul v-for="image in images" :key="image">
+      <li>
+         <img :src="image.urls.small" width="300" height="300" alt="image" />
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -10,10 +15,10 @@ import { useUnsplashApi } from "../composables/useUnsplashApi";
 export default {
   name: "HomeView",
   setup() {
-    let { image, ...toRefs } = useUnsplashApi();
+    let {fetchApi, ...toRefs } = useUnsplashApi();
 
     return {
-      image,
+      fetchApi,
       ...toRefs,
     };
   },

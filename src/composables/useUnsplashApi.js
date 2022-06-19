@@ -1,18 +1,21 @@
 import { reactive, toRefs } from "vue";
-
+import axios from "axios";
 export function useUnsplashApi() {
   const state = reactive({
     apiKey: "AnoeiQ5Z_WRegCC1p-dBjqCjokc18BjP0jYOfHRvR9M",
-    basicUrl: "https://api.unsplash.com/photos/random",
-    image: "",
+    basicUrl: "https://api.unsplash.com/search/photos",
+    image: [],
+    headers: {
+      Authorization:
+        "Client-ID <AnoeiQ5Z_WRegCC1p-dBjqCjokc18BjP0jYOfHRvR9M>",
+      "Accept-Version": "v1"
+    }
   });
 
-  fetch(state.basicUrl + `?client_id=${state.apiKey}`)
-    .then((response) => response.json())
-    .then((json) => {
-      state.image = json.urls.full;
-    });
-
+  fetch(`https://api.unsplash.com/search/photos`)
+  .then(response => {
+    state.image = response.data.results;
+  })
   return {
     ...toRefs(state),
   };
